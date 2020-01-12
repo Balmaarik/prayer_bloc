@@ -13,7 +13,6 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   int selectedRadio;
   OptionsBloc optionsBloc;
-  Options selectedOption;
   @override
   void initState() {
     // TODO: implement initState
@@ -23,15 +22,8 @@ class _SettingsPageState extends State<SettingsPage> {
     optionsBloc.add(FetchOptionsEvent());
   }
 
-
-
-  setSelectedRadio(int val){
-    setState(() {
-      selectedRadio = val;
-    });
-  }
   @override
-  Widget build(BuildContext context) {
+   build(BuildContext context) {
     //final methodBloc=BlocProvider.of<MethodBloc>(context);
     return Scaffold(
       appBar: AppBar(),
@@ -45,7 +37,9 @@ class _SettingsPageState extends State<SettingsPage> {
               if (state is InitialOptionsState) {
                 return buildLoading();
               } else if (state is OptionsLoadedState) {
-                return buildArticleList(state.options);
+                print("state");
+                print(state.options.selectedMethod);
+                return BuildList(options: state.options);
               }
             },
           )
@@ -53,109 +47,144 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
 
-
-
-  Widget buildArticleList(Options options) {
-
-    selectedRadio = options.selectedMethod;
-
-        return ListView(
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(15.0),
-                  child: Text(
-                    "Prayer Methods",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Column(
-                  children: <Widget>[
-                    RadioListTile(
-                        value: 1,
-                        groupValue: selectedRadio,
-                        activeColor: Colors.black,
-                        title: Text(
-                          "Egyptian General Authority of Survey",
-                        ),
-                        onChanged: (val) {
-                          print(val);
-                          setSelectedRadio(val);
-                        }),
-                    RadioListTile(
-                        value: 2,
-                        groupValue: selectedRadio,
-                        activeColor: Colors.black,
-                        title: Text(
-                          "University Of Islamic Sciences, Karachi (Shafi)",
-                        ),
-                        onChanged: (val) {
-                          print(val);
-                          setSelectedRadio(val);
-                        }),
-                    RadioListTile(
-                        value: 3,
-                        groupValue: selectedRadio,
-                        activeColor: Colors.black,
-                        title: Text(
-                          "University Of Islamic Sciences, Karachi (Hanafi)",
-                        ),
-                        onChanged: (val) {
-                          print(val);
-                          setSelectedRadio(val);
-                        }),
-                    RadioListTile(
-                        value: 4,
-                        groupValue: selectedRadio,
-                        activeColor: Colors.black,
-                        title: Text(
-                          "	Islamic Circle of North America ",
-                        ),
-                        onChanged: (val) {
-                          print(val);
-                          setSelectedRadio(val);
-                        }),
-                    RadioListTile(
-                        value: 5,
-                        groupValue: selectedRadio,
-                        activeColor: Colors.black,
-                        title: Text(
-                          "Muslim World League",
-                        ),
-                        onChanged: (val) {
-                          print(val);
-                          setSelectedRadio(val);
-                        }),
-                    RadioListTile(
-                        value: 6,
-                        groupValue: selectedRadio,
-                        activeColor: Colors.black,
-                        title: Text(
-                          "Umm Al-Qura",
-                        ),
-                        onChanged: (val) {
-                          print(val);
-                          setSelectedRadio(val);
-                        }),
-                    FloatingActionButton(
-                      onPressed: (){
-                        selectedOption.selectedMethod = selectedRadio;
-                        optionsBloc.add(SaveOptionsEvent(selectedOption));
-                        Navigator.pop(context);
-                      },
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ],
-        );
-  }
   Widget buildLoading() {
     return Center(
       child: CircularProgressIndicator(),
+    );
+  }
+}
+
+class BuildList extends StatefulWidget {
+
+  Options options;
+  BuildList({this.options});
+  @override
+  BuildList_State createState() => BuildList_State();
+}
+
+class BuildList_State extends State<BuildList> {
+
+
+  OptionsBloc optionsBloc;
+  int selectedRadio;
+  setSelectedRadio(int val){
+    setState(() {
+      selectedRadio = val;
+    });
+  }
+
+  setSelectecMethod(){
+    setState(() {
+      selectedRadio = widget.options.selectedMethod;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    optionsBloc = BlocProvider.of<OptionsBloc>(context);
+    setSelectecMethod();
+    print("init $selectedRadio");
+    print(widget.options.selectedMethod);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    //save.selectedMethod = selectedRadio;
+    //print(selectedRadio);
+    return ListView(
+      children: <Widget>[
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                "Prayer Methods",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Column(
+              children: <Widget>[
+                RadioListTile(
+                    value: 1,
+                    groupValue: selectedRadio,
+                    activeColor: Colors.black,
+                    title: Text(
+                      "Egyptian General Authority of Survey",
+                    ),
+                    onChanged: (val) {
+                      //print(val);
+                      setSelectedRadio(val);
+                    }),
+                RadioListTile(
+                    value: 2,
+                    groupValue: selectedRadio,
+                    activeColor: Colors.black,
+                    title: Text(
+                      "University Of Islamic Sciences, Karachi (Shafi)",
+                    ),
+                    onChanged: (val) {
+                      //print(val);
+                      setSelectedRadio(val);
+                    }),
+                RadioListTile(
+                    value: 3,
+                    groupValue: selectedRadio,
+                    activeColor: Colors.black,
+                    title: Text(
+                      "University Of Islamic Sciences, Karachi (Hanafi)",
+                    ),
+                    onChanged: (val) {
+                      //print(val);
+                      setSelectedRadio(val);
+                    }),
+                RadioListTile(
+                    value: 4,
+                    groupValue: selectedRadio,
+                    activeColor: Colors.black,
+                    title: Text(
+                      "	Islamic Circle of North America ",
+                    ),
+                    onChanged: (val) {
+                      //print(val);
+                      setSelectedRadio(val);
+                    }),
+                RadioListTile(
+                    value: 5,
+                    groupValue: selectedRadio,
+                    activeColor: Colors.black,
+                    title: Text(
+                      "Muslim World League",
+                    ),
+                    onChanged: (val) {
+                      //print(val);
+                      setSelectedRadio(val);
+                    }),
+                RadioListTile(
+                    value: 6,
+                    groupValue: selectedRadio,
+                    activeColor: Colors.black,
+                    title: Text(
+                      "Umm Al-Qura",
+                    ),
+                    onChanged: (val) {
+                      //print(val);
+                      setSelectedRadio(val);
+                    }),
+                FloatingActionButton(
+                  onPressed: (){
+                    Options save = Options(selectedRadio);
+
+                    optionsBloc.add(SaveOptionsEvent(save));
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

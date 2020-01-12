@@ -2,5 +2,7 @@
 
 class Options{
   int selectedMethod;
-  Options(this.selectedMethod);
+  Options(selectedM){
+    this.selectedMethod = selectedM;
+  }
 }
