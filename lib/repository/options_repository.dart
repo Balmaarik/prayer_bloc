@@ -23,7 +23,7 @@ class OptionsRepositoryImp implements OptionsRepository {
   Future<Options> getOptions() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    int selectedM = prefs.getInt('prayer_method') ?? 4;
+    int selectedM = await prefs.getInt('prayer_method') ?? 4;
     Options method = Options(selectedM);
     return method;
   }

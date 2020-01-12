@@ -23,7 +23,7 @@ class OptionsBloc extends Bloc<OptionsEvent, OptionsState> {
         Options options = await optionsRepository.getOptions();
         yield OptionsLoadedState(options: options);
     } else if(event is SaveOptionsEvent ){
-      optionsRepository.saveOptions(event.options);
+        await optionsRepository.saveOptions(event.options);
     }
 
   }

@@ -24,7 +24,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
    build(BuildContext context) {
-    //final methodBloc=BlocProvider.of<MethodBloc>(context);
     return Scaffold(
       appBar: AppBar(),
       body: Container(

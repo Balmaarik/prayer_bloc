@@ -6,7 +6,11 @@ import 'package:prayer_bloc/models/AthanTimes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:prayer_bloc/repository/options_repository.dart';
+import 'package:prayer_bloc/repository/prayer_repository.dart';
 import 'package:prayer_bloc/settings_page.dart';
+
+import 'bloc/options_bloc.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,55 +32,32 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Builder(
-        builder: (context) {
-          return Material(
-            child: Scaffold(
-              //key: _scaffoldkey,
-              appBar: AppBar(
-                title: Text("Prayer API"),
-                actions: <Widget>[
-                  RaisedButton(
-                    onPressed: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SettingsPage()),
-                      );
-                      setState(() {});
-                    },
-                  ),
-                ],
-              ),
-              body: Container(
-                child: BlocListener<PrayerBloc, PrayerState>(
-                  listener: (context, state) {
-                    if (state is PrayerErrorState) {
-                      Scaffold.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(state.message),
-                        ),
-                      );
-                    }
-                  },
-                  child: BlocBuilder<PrayerBloc, PrayerState>(
-                    builder: (context, state) {
-                      if (state is InitialPrayerState) {
-                        return buildLoading();
-                      } else if (state is PrayerLoadedState) {
-                        return buildArticleList(state.item);
-                      } else if (state is PrayerErrorState) {
-                        return buildErrorUi(state.message);
+    return     Container(
+                  child: BlocListener<PrayerBloc, PrayerState>(
+                    listener: (context, state) {
+                      if (state is PrayerErrorState) {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.message),
+                          ),
+                        );
                       }
                     },
+                    child: BlocBuilder<PrayerBloc, PrayerState>(
+                      builder: (context, state) {
+                        if (state is InitialPrayerState) {
+                          return buildLoading();
+                        } else if (state is PrayerLoadedState) {
+                          return buildArticleList(state.item);
+                        } else if (state is PrayerErrorState) {
+                          return buildErrorUi(state.message);
+                        }
+                      },
+                    ),
                   ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
+
+              );
+
   }
 
   Widget buildLoading() {
