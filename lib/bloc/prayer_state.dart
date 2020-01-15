@@ -27,7 +27,7 @@ class PrayerLoadedState extends PrayerState {
 class PrayerErrorState extends PrayerState {
 
   String message1;
-
+  var bib;
   PrayerErrorState({@required this.message1});
 
   @override
