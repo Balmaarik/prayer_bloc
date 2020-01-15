@@ -30,7 +30,7 @@ class OptionsRepositoryImp implements OptionsRepository {
   @override
   Future<void> saveOptions(Options options) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('prayer_method', options.selectedMethod);
+    await prefs.setInt('prayer_method', options.selectedMethod);
   }
 
 }

@@ -3,7 +3,16 @@ import 'package:prayer_bloc/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prayer_bloc/models/Options.dart';
+import 'package:prayer_bloc/repository/options_repository.dart';
 
+class ParentSettingsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<OptionsBloc>(
+      create: (BuildContext context) => OptionsBloc(OptionsRepositoryImp()),
+        child: SettingsPage());
+  }
+}
 
 class SettingsPage extends StatefulWidget {
   @override

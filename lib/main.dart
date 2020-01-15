@@ -9,6 +9,7 @@ import 'package:prayer_bloc/repository/prayer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prayer_bloc/screens/map_screen.dart';
+import 'package:prayer_bloc/settings_page.dart';
 
 import 'bloc/options_bloc.dart';
 
@@ -41,9 +42,9 @@ class MyApp extends StatelessWidget {
                 BlocProvider<PrayerBloc>(
                 create: (BuildContext context) => PrayerBloc(repository: PrayerRepositoryImpl()),
                 ),
-                BlocProvider<OptionsBloc>(
-                create: (BuildContext context) => OptionsBloc(OptionsRepositoryImp()),
-                ),
+//                BlocProvider<OptionsBloc>(
+//                create: (BuildContext context) => OptionsBloc(OptionsRepositoryImp()),
+//                ),
               ],
               child: MainScreen(),
             ),
@@ -144,7 +145,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
                 automaticallyImplyLeading: false,
                 title: Row(
                   children: <Widget>[
-                    Image(image: AssetImage("assets/SalawatLogoIcon1.png"),),
+                    Image(image: AssetImage("assets/SalawatLogoIcon1.png"), fit: BoxFit.contain,),
                     Padding(padding: EdgeInsets.all(1)),
                     Text(
                       AppLocalizations.of(context).tr('Salah Times'),
@@ -155,10 +156,17 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
                 backgroundColor: Colors.black38,
                 elevation: 0,
 
-
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon( Icons.menu),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ParentSettingsPage()));
+                  },
+                ),
+              ]
               ),
-
-
 
               body: _children[_currentIndex],
 
