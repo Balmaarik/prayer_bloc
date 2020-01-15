@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                       if (state is PrayerErrorState) {
                         Scaffold.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(state.message),
+                            content: Text(state.message1),
                           ),
                         );
                       }
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                         } else if (state is PrayerLoadedState) {
                           return buildArticleList(state.item);
                         } else if (state is PrayerErrorState) {
-                          return buildErrorUi(state.message);
+                          return buildErrorUi(state.message1);
                         }
                       },
                     ),

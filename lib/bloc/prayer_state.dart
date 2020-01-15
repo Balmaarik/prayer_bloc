@@ -26,11 +26,11 @@ class PrayerLoadedState extends PrayerState {
 
 class PrayerErrorState extends PrayerState {
 
-  String message;
+  String message1;
 
-  PrayerErrorState({@required this.message});
+  PrayerErrorState({@required this.message1});
 
   @override
   // TODO: implement props
-  List<Object> get props => [message];
+  List<Object> get props => [message1];
 }

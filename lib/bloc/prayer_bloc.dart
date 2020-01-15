@@ -23,7 +23,7 @@ class PrayerBloc extends Bloc<PrayerEvent, PrayerState> {
         Timings item = await repository.getItem();
         yield PrayerLoadedState(item: item);
       } catch (e) {
-        yield PrayerErrorState(message: e.toString());
+        yield PrayerErrorState(message1: e.toString());
       }
     }
   }
